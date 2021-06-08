@@ -1,0 +1,31 @@
+.ag-input-field-input.ag-text-field-input, .ag-wrapper.ag-input-wrapper.ag-text-field-input-wrapper, .ag-labeled.ag-label-align-left.ag-text-field.ag-input-field{
+    color: #000 !important;
+  }
+  
+  .ag-floating-filter-input{
+    color: #000 !important;
+  }
+
+  .inventoryCell{
+    text-align: left;
+    border: 1px solid #dde2eb;
+  }
+
+  .inventoryContainer{
+    background: -webkit-linear-gradient(left, #c4e0e5, #4ca1af);
+  }
+  .ag-header-cell .ag-header-cell-resize {
+    display: block !important;
+  }
+  .ag-header-cell .ag-header-cell-resize::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    display: block;
+    left: calc(50% - 1px);
+    width: 2px;
+    height: 30%;
+    top: calc(50% - 15%);
+    background-color: rgba(186, 191, 199, 0.5);
+    background-color: var(--ag-header-column-resize-handle-color, rgba(186, 191, 199, 0.5));
+  }

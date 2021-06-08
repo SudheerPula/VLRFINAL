@@ -1,0 +1,12 @@
+.footerDiv {
+    height: 50px;
+    background: -webkit-linear-gradient(left, #c4e0e5, #4ca1af);
+    width: 100%;
+}
+
+.footerText{
+    padding: 10px;
+}
+.m-0 {
+    margin: 0;
+}
