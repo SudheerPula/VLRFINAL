@@ -25,6 +25,18 @@ const getCellStyle = () => {
   }
 }
 
+const getCellNumberStyle = () => {
+  return {
+    borderRight: "1px solid #dde2eb", fontSize:'12px', textAlign: 'right'
+  }
+}
+
+function currencyFormatter(currency, sign) {
+  var sansDec = currency.toFixed(2);
+  var formatted = sansDec.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return sign + `${formatted}`;
+}
+
 const columnDefs = [
   {
     headerName: "Customer Sku",
@@ -43,7 +55,7 @@ const columnDefs = [
     cellStyle: getCellStyle()
   },
   {
-    headerName: "Description",
+    headerName: "Description", 
     field: "description",
     suppressMenu: true,
     filter: "agTextColumnFilter",
@@ -57,28 +69,31 @@ const columnDefs = [
     filter: false,
     cellClass: "inventoryCell",
     textAlign: "right",
-    cellStyle: getCellStyle()
+    cellStyle: getCellNumberStyle(),
+    valueFormatter: param => currencyFormatter(Math.floor(param.data.onHandQty), '')
   },
   {
     headerName: "Committed",
     field: "committedQty",
     filter: false,
-    cellClass: "inventoryCell",
-    cellStyle: getCellStyle()
+    cellStyle: getCellNumberStyle(),
+    valueFormatter: param => currencyFormatter(Math.floor(param.data.committedQty), '')
   },
   {
     headerName: "Available",
     field: "availableQty",
     filter: false,
     cellClass: "inventoryCell",
-    cellStyle: getCellStyle()
+    cellStyle: getCellNumberStyle(),
+    valueFormatter: param => currencyFormatter(Math.floor(param.data.availableQty), '')
   },
   {
     headerName: "Open PO Qty",
     field: "openPOQty",
     filter: false,
     cellClass: "inventoryCell",
-    cellStyle: getCellStyle()
+    cellStyle: getCellNumberStyle(),
+    valueFormatter: param => currencyFormatter(Math.floor(param.data.openPOQty), '')
   },
 ];
 
@@ -122,7 +137,7 @@ const Inventory = () => {
 
   const getRowStyle = (params) => {
     if (params.node.rowIndex % 2 === 0) {
-      return { background: "#efeee78c" };
+      return { background: "#fff8" };
     } else {
       return { background: "#e3e9eb" };
     }

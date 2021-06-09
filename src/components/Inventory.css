@@ -8,6 +8,10 @@
     font-weight:bold;
     font-size: 20px;
   }
+
+  .ag-floating-bottom-container .ag-row .ag-cell {
+    color: blue
+  }
  
   .ag-theme-alpine .ag-row:nth-child(even) {  
     background-color: #9bc0c7; 	
@@ -49,4 +53,8 @@
     top: calc(50% - 15%);
     background-color: rgba(186, 191, 199, 0.5);
     background-color: var(--ag-header-column-resize-handle-color, rgba(186, 191, 199, 0.5));
+  }
+
+  .ag-header-cell .ag-header-cell-text {
+    padding-left: 30%;
   }

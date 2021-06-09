@@ -59,7 +59,7 @@ body {
 
 .ag-header-cell {
   /* Necessary to allow for text to grow vertically */
-  background-color: #0f719e;
+  background-color: #0e71eb;
   color: #fff;
 }
 .buttonstop {
@@ -190,7 +190,7 @@ tr:nth-child(even) {
 }
 
 .blue {
-  background-color: mediumblue;
+  background-color: rgb(42, 42, 218);
 }
 
 .nav-link {
