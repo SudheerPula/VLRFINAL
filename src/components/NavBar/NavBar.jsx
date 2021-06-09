@@ -128,7 +128,7 @@ const NavBar = () => {
       <AppBar position="static">
         <Toolbar>
           <Link className="navbar-brand" to="/inventory">
-            <img src="images/logo.png" className="imgSize" alt="" />
+            <img src="images/logo.png" style={{width: '25%',marginLeft: '-2%'}} className="imgSize" alt="" />
           </Link>
           <div className={classes.grow} />
           {authenticated ? (
