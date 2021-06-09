@@ -39,17 +39,35 @@ const Login = () => {
     setUserRegister(registerData);
   };
 
+ 
   const handleSignupSubmit = () => {
     if (userRegister.password !== userRegister.cnfpassword)
-      return (
-        <SnackbarUI
-          show={true}
-          message="password and confirm password are not equal"
-          severity="danger"
-        />
-      );
-    const { email, password, userName } = userRegister;
-    dispatch(doRegister({ email, password, userName }));
+    {
+      alert("Passwords do not match");
+    }
+
+    var pass = userRegister.password;
+      
+   var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  if (regex.exec(pass) != null) {   
+       alert('Successfully Registered');
+       const { email, password, userName } = userRegister;
+       dispatch(doRegister({ email, password, userName }));
+       
+    }else{
+      alert('Password must contain 1 Numeric, one Uppercase, One Lowercase and one special character and atleast 8 characters');
+    }  		
+
+    
+      // return (
+      //   <SnackbarUI
+      //     show={true}
+      //     //message="password and confirm password are not equal"
+          
+      //     severity="danger"
+      //   />
+      // );
+    
   };
 
   const handleLoginSubmit = () => {

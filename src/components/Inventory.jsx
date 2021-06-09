@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AgGridReact } from "ag-grid-react";
+import { AgGridReact,  AgGridColumn } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -56,6 +56,7 @@ const columnDefs = [
     field: "onHandQty",
     filter: false,
     cellClass: "inventoryCell",
+    textAlign: "right",
     cellStyle: getCellStyle()
   },
   {
@@ -93,6 +94,10 @@ const Inventory = () => {
     setGridApi(params.api);
   };
 
+
+  const onFirstDataRendered = (params) => {   
+    params.api.sizeColumnsToFit();
+  };
   if (loading && gridApi) {
     gridApi.showLoadingOverlay();
   } else {
@@ -153,15 +158,16 @@ const Inventory = () => {
     <>
       <div
         className="row"
-        style={{ marginTop: "10px", marginLeft: 0, marginRight: 0 }}
+        style={{ marginTop: "4px", height: '50px', marginLeft: 0, marginRight: 0 }}
       >
         <div className="col-sm-12 btn btn-info">
           <p
             style={{
               display: "inline",
-              paddingLeft: "14%",
+              paddingLeft: "23%",
               paddingTop: "0.2%",
-              fontWeight: 'bold'
+              fontWeight: 'bold',
+              fontSize: '24px'
             }}
           >
             Customer Fabric Availability
@@ -174,7 +180,15 @@ const Inventory = () => {
               paddingTop: "0.2%",
             }}
           >
-            {moment().format("MMMM Do YYYY, h:mm:ss a")}
+           </p>
+           <p style={{
+              display: "inline",
+              float: "right",
+              marginLeft: "7%",
+              marginRight: "-1%",
+              marginTop: "-2.3%",
+            }}>
+              {moment().format("MMMM Do YYYY, h:mm:ss a")}
           </p>
         </div>
       </div>
@@ -185,8 +199,8 @@ const Inventory = () => {
         >
           <div className="card">
             <div className="row" style={{ marginTop: "2%", marginLeft: "1%" }}>
-              <div className="col-md-4 text-left">
-              Customer:{userData.customers[0]?.customerName}
+              <div className="col-md-4 text-left classtopcustomer" style={{fontSize: '22px'}}>
+              {userData.customers[0]?.customerName}
               </div>
               {/* <div className="col-md-5 text-left">
                 <img
@@ -195,7 +209,7 @@ const Inventory = () => {
                   alt=""
                 />
               </div> */}
-              <div className="col-md-3 text-right">
+              <div className="col-md-3 text-right" style={{marginTop: '-78px', marginLeft: '37%' }}>
                 <Button
                   variant="contained"
                   color="primary"
@@ -217,27 +231,31 @@ const Inventory = () => {
               </div>
             </div>
 
-            <div className="card-body position-relative">
+            <div className="card-body position-relative" style={{ height: "100%", width: "100%", marginTop: '-2%' }}>
               <div
                 className="ag-theme-alpine"
-                style={{ height: "500px", width: "100%", textAlign: "center" }}
+                style={{ height: '600px', width: "100%", textAlign: "center" }}
               >
                 <AgGridReact
                   defaultColDef={{
                     sortable: true,
                     filter: true,
                     floatingFilter: true,
+                    
                   }}
                   columnDefs={columnDefs}
+                  onFirstDataRendered={onFirstDataRendered}
                   getRowStyle={getRowStyle}
                   rowData={gridData}
                   onGridReady={onGridReady}
+
                   pinnedBottomRowData={createData(1, "Bottom")}
-                  statusBar={{
+                  statusBar={{ 
                     statusPanels: [
                       {
                         statusPanel: "agTotalAndFilteredRowCountComponent",
                         align: "left",
+                        
                       },
                       {
                         statusPanel: "agTotalRowCountComponent",

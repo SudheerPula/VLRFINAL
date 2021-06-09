@@ -1,11 +1,32 @@
 .ag-input-field-input.ag-text-field-input, .ag-wrapper.ag-input-wrapper.ag-text-field-input-wrapper, .ag-labeled.ag-label-align-left.ag-text-field.ag-input-field{
     color: #000 !important;
   }
-  
+  .ag-floating-bottom-container {
+    background-color: #fff;
+    opacity: 9;
+    color:red !important;
+    font-weight:bold;
+    font-size: 20px;
+  }
+ 
+  .ag-theme-alpine .ag-row:nth-child(even) {  
+    background-color: #9bc0c7; 	
+  }  
+
+  .ag-header-cell{
+    /* Necessary to allow for text to grow vertically */
+    background: -webkit-linear-gradient(top, #0f719e, #4ca1af);
+    color: #fff;
+    
+  }
   .ag-floating-filter-input{
     color: #000 !important;
   }
-
+.classtopcustomer{
+  margin-top: -5%;
+  font-weight:bold;
+  color: white;
+}
   .inventoryCell{
     text-align: left;
     border: 1px solid #dde2eb;
