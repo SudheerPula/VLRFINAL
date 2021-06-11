@@ -4,7 +4,7 @@ import { doLogin, doRegister } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { routes } from "../../routes";
-import SnackbarUI from "../SnackbarUI/SnackbarUI";
+//import SnackbarUI from "../SnackbarUI/SnackbarUI";
 
 const Login = () => {
   const [userDetails, setUserDetails] = React.useState({
@@ -37,40 +37,60 @@ const Login = () => {
     const { name, value } = event.target;
     registerData[name] = value;
     setUserRegister(registerData);
-  };
+  }
 
- 
-  const handleSignupSubmit = () => {
-    if (userRegister.password !== userRegister.cnfpassword)
-    {
-      alert("Passwords do not match");
+
+  const invalidEmailArray = ["@gmail.com","@yahoo.com", "@hotmail.com","@outlook.com"];
+  
+  function validateCorporateEmail(email){
+    return invalidEmailArray.some(invalidEmail => email.endsWith(invalidEmail)); 
+    
+  }
+  function validateEmail(email) {
+    if (email !== "undefined") {         
+      var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+      if (!pattern.test(email)) {    
+        
+        return "Invalid Email Entered";
+      }
+      if(validateCorporateEmail(email)) {
+        return "Please use only corporate email ID";
+      }
     }
+    return "Success";
+  }
 
+   		
+  const handleSignupSubmit = () => {
+    var msg = validateEmail(userRegister.email);
+    if(msg !== "Success") {
+      alert(msg);
+      return;
+    }
     var pass = userRegister.password;
-      
-   var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-  if (regex.exec(pass) != null) {   
-       alert('Successfully Registered');
-       const { email, password, userName } = userRegister;
-       dispatch(doRegister({ email, password, userName }));
-       
-    }else{
-      alert('Password must contain 1 Numeric, one Uppercase, One Lowercase and one special character and atleast 8 characters');
-    }  		
-
-    
-      // return (
-      //   <SnackbarUI
-      //     show={true}
-      //     //message="password and confirm password are not equal"
-          
-      //     severity="danger"
-      //   />
-      // );
-    
+    var pattern = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/);
+    if (!pattern.test(pass)) { 
+      alert('Password must contain 1 Numeric, one Uppercase, One Lowercase and one special character and atleast 8 characters'); 
+      }else if (userRegister.password !== userRegister.cnfpassword)
+      {
+        alert("Passwords do not match");
+      } else{
+        alert('Successfully Registered');
+        const { email, password, userName } = userRegister;
+        dispatch(doRegister({ email, password, userName }));
+      } 
   };
-
+ 
   const handleLoginSubmit = () => {
+    var msg = validateEmail(userDetails.email);
+    if(msg !== "Success") {
+      alert(msg);
+      return;
+    }
+    if(userDetails.password === "" || userDetails.password === null) {
+      alert("Invalid Password");
+      return;
+    }    
     const { email, password } = userDetails;
     dispatch(doLogin({ email, password }));
   };
@@ -95,8 +115,8 @@ const Login = () => {
                 <div className="text-center">
                   <div className="wrapper">
                     <div className="title-text">
-                      <div className="title login">Login Form</div>
-                      <div className="title signup">Signup Form</div>
+                      <div className="title login" style={{marginLeft:"2%"}}>User Login</div>
+                      <div className="title signup">User Signup</div>
                     </div>
                     <div className="form-container">
                       <div className="slide-controls">

@@ -9945,6 +9945,7 @@ button.bg-dark:focus {
 
 .text-center {
   text-align: center !important;
+  font-style: italic;
 }
 
 @media (min-width: 576px) {

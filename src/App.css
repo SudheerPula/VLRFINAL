@@ -208,7 +208,7 @@ tr:nth-child(even) {
 .wrapper {
   overflow: hidden;
 
-  background: #fff;
+  background: #e9ecef;
   padding: 30px;
   margin-top: 1%;
   border-radius: 5px;
@@ -420,7 +420,7 @@ input#ag-294-input, input#ag-285-input{
 }
 
 .welcomeTitle{
-  margin-top: 8%;
+  margin-top: 5%;
 }
 
 .App {

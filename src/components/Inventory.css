@@ -10,17 +10,17 @@
   }
 
   .ag-floating-bottom-container .ag-row .ag-cell {
-    color: blue
+    color:  #2370e4
   }
  
   .ag-theme-alpine .ag-row:nth-child(even) {  
-    background-color: #9bc0c7; 	
+    background-color:#f7f7f9;; 	
   }  
 
   .ag-header-cell{
     /* Necessary to allow for text to grow vertically */
-    background: -webkit-linear-gradient(top, #0f719e, #4ca1af);
-    color: #fff;
+    background: -webkit-linear-gradient(top, #64c7f8, #1a8fb6);
+    border-right: #ccc 1px solid;
     
   }
   .ag-floating-filter-input{
@@ -37,7 +37,7 @@
   }
 
   .inventoryContainer{
-    background: -webkit-linear-gradient(left, #c4e0e5, #4ca1af);
+    background: -webkit-linear-gradient(left, #c4e0e5, #629fa8);
   }
   .ag-header-cell .ag-header-cell-resize {
     display: block !important;

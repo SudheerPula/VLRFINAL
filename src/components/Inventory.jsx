@@ -10,6 +10,7 @@ import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import { makeStyles } from "@material-ui/core/styles";
 import "./Inventory.css";
 import moment from "moment";
+import printDoc from "./pdfExport/printDoc";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -97,16 +98,41 @@ const columnDefs = [
   },
 ];
 
+
 const Inventory = () => {
+  //pdf attributes
+  const PDF_PAGE_ORITENTATION = "landscape";
+  const PDF_WITH_HEADER_IMAGE = false;
+  const PDF_WITH_FOOTER_PAGE_COUNT = true
+  const PDF_HEADER_HEIGHT = 25;
+  const PDF_ROW_HEIGHT = 15;
+
+  const PDF_ODD_BKG_COLOR = "#fcfcfc";
+  const PDF_EVEN_BKG_COLOR = "#fff";
+  const PDF_WITH_CELL_FORMATTING = true;
+  const PDF_WITH_COLUMNS_AS_LINKS = false;
+
+  const PDF_SELECTED_ROWS_ONLY = false;
+
+  const PDF_HEADER_COLOR = "#f8f8f8";
+  const PDF_INNER_BORDER_COLOR = "#dde2eb";
+  const PDF_OUTER_BORDER_COLOR = "#babfc7";
+  const PDF_LOGO =
+  "./pdfExport/PDF_Header.PNG";
+
+
+
   const classes = useStyles();
   const { userData } = useSelector((state) => state.login);
   const [gridApi, setGridApi] = useState(null);
+  const [columnApi, setColumnApi] = useState(null);
   const { gridData, customerId, loading, totalCutomerFabrics } = useSelector(
     (state) => state.inventory
   );
 
   const onGridReady = (params) => {
     setGridApi(params.api);
+    setColumnApi(params.columnApi);
   };
 
 
@@ -147,8 +173,25 @@ const Inventory = () => {
     gridApi.exportDataAsCsv();
   };
 
-  const onExcelExport = () => {
-    gridApi.exportDataAsExcel();
+  const onPDFExport = () => { 
+    const printParams = {
+      PDF_HEADER_COLOR,
+      PDF_INNER_BORDER_COLOR,
+      PDF_OUTER_BORDER_COLOR,
+      PDF_LOGO,
+      PDF_PAGE_ORITENTATION,
+      PDF_WITH_HEADER_IMAGE,
+      PDF_WITH_FOOTER_PAGE_COUNT,
+      PDF_HEADER_HEIGHT,
+      PDF_ROW_HEIGHT,
+      PDF_ODD_BKG_COLOR,
+      PDF_EVEN_BKG_COLOR,
+      PDF_WITH_CELL_FORMATTING,
+      PDF_WITH_COLUMNS_AS_LINKS,
+      PDF_SELECTED_ROWS_ONLY
+    };
+
+    printDoc(printParams, gridApi, columnApi);
   };
 
   function createData(count, prefix) {
@@ -201,7 +244,7 @@ const Inventory = () => {
               float: "right",
               marginLeft: "7%",
               marginRight: "-1%",
-              marginTop: "-2.3%",
+              marginTop: "-3%",
             }}>
               {moment().format("MMMM Do YYYY, h:mm:ss a")}
           </p>
@@ -224,7 +267,7 @@ const Inventory = () => {
                   alt=""
                 />
               </div> */}
-              <div className="col-md-3 text-right" style={{marginTop: '-78px', marginLeft: '37%' }}>
+              <div className="col-md-3 text-right" style={{marginTop: '-70px', marginLeft: '38%' }}>
                 <Button
                   variant="contained"
                   color="primary"
@@ -238,7 +281,7 @@ const Inventory = () => {
                   variant="contained"
                   color="primary"
                   className={classes.button}
-                  onClick={onExcelExport}
+                  onClick={onPDFExport}
                   endIcon={<CloudUploadIcon />}
                 >
                   PDF

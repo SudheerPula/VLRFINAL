@@ -8,6 +8,7 @@ export const doLogin = createAsyncThunk(
       const resp = await login({ email, password });
       return resp;
     } catch (err) {
+      alert("Please enter valid email and password");
       return rejectWithValue(err);
     }
   }
@@ -20,6 +21,7 @@ export const doRegister = createAsyncThunk(
       const resp = await register({ email, password, userName });
       return resp;
     } catch (err) {
+      
       return rejectWithValue(err);
     }
   }

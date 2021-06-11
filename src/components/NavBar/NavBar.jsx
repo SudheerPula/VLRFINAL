@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
     "& .MuiAppBar-colorPrimary": {
-      background: "-webkit-linear-gradient(left, #c4e0e5, #4ca1af)"
+      background: "-webkit-linear-gradient(right, #c4e0e5, #4ca1af)"
     },
   },
   menuButton: {
@@ -127,9 +127,15 @@ const NavBar = () => {
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          <Link className="navbar-brand" to="/inventory">
+        <div>
+              {" "}
+              <center>
+                <h2 className="text-center" style={{fontStyle:"italic",fontFamily:"roboto"}}>VLR, LLC</h2>{" "}
+              </center>
+            </div>
+          {/* <Link className="navbar-brand" to="/inventory">
             <img src="images/logo.png" style={{width: '25%',marginLeft: '-2%'}} className="imgSize" alt="" />
-          </Link>
+          </Link> */}
           <div className={classes.grow} />
           {authenticated ? (
             <div className={classes.sectionDesktop}>
@@ -169,7 +175,7 @@ const NavBar = () => {
             <div>
               {" "}
               <center>
-                <h2 className="text-center">Welcome to Stone & Leigh</h2>{" "}
+                <h2 className="text-center" style={{fontStyle:"italic",fontFamily:"roboto"}}>Welcome to VLR, LLC</h2>{" "}
               </center>
             </div>
           )}
