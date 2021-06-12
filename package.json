@@ -28,7 +28,8 @@
     "redux-promise-middleware": "^6.1.2",
     "validator": "^13.6.0",
     "web-vitals": "^1.1.2",
-    "pdfmake": "^0.1.70"
+    "pdfmake": "^0.1.70",
+    "jsonwebtoken": "^8.5.1"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -308,7 +308,7 @@ input[type="radio"] {
 .form-inner .signupForm .field {
   height: 50px;
   width: 100%;
-  margin-top: 20px;
+  margin-top: 2%;
 }
 .form-inner .signupForm .field input {
   height: 100%;
@@ -426,3 +426,4 @@ input#ag-294-input, input#ag-285-input{
 .App {
   position: relative;
 }
+

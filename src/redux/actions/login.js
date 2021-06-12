@@ -26,3 +26,16 @@ export const doRegister = createAsyncThunk(
     }
   }
 );
+
+export const doForgotPassword = createAsyncThunk(
+  "forgotPassword",
+  async ({ email }, { rejectWithValue }) => {
+    try {
+      const resp = await register({ email });
+      return resp;
+    } catch (err) {
+      
+      return rejectWithValue(err);
+    }
+  }
+);

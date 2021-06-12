@@ -11,12 +11,14 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { withRouter } from "react-router";
 import { routes } from "../../routes";
+import {Logout} from "../Logout/Logout";
+
 
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
     "& .MuiAppBar-colorPrimary": {
-      background: "-webkit-linear-gradient(right, #c4e0e5, #4ca1af)"
+      background: "-webkit-linear-gradient(right, #64c7f8, #1a8fb6)"
     },
   },
   menuButton: {
@@ -98,9 +100,7 @@ const NavBar = () => {
 
   const handleLogout = () => {
     handleMenuClose();
-    localStorage.clear();
-    history.push(routes.LOGIN);
-    window.location.reload();
+    Logout()
   };
 
   const menuId = "primary-search-account-menu";

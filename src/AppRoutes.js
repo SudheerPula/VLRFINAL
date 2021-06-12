@@ -51,16 +51,15 @@ const AppRoutes = ({ authenticated }) => {
         component={() => <Home />}
         authenticated={authenticated}
       />
-      <PrivateRoute
-        path={routes.FORGETPASSWORD}
-        authenticated={authenticated}
+      <Route
+        path={routes.FORGETPASSWORD}        
         exact
         component={() => <ForgotPassword />}
       />
-      <PrivateRoute
+      <Route
         path={routes.RESETLINK}
         exact
-        authenticated={authenticated}
+        
         component={() => <ResetLink />}
       />
     </Switch>

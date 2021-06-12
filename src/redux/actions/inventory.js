@@ -1,14 +1,20 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchInventoryDataAPI } from '../../util/Api/inventory';
 
+/*
+*window.location need to changed to Redirect in React
+*/
 export const fetchInventoryData = createAsyncThunk(
   "fetchInventory",
   async ({ id }, { rejectWithValue }) => {
     try {
-      const resp = await fetchInventoryDataAPI({id});
-      return resp.data;
+      let resp = await fetchInventoryDataAPI({id});
+      return resp.data; 
     } catch (err) {
-      return rejectWithValue(err);
+      localStorage.clear();      
+      window.location.href="/login";
+      window.location.reload();
+      
     }
   }
 );

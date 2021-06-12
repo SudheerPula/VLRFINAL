@@ -2,8 +2,9 @@ import React from "react";
 import "./Login.css";
 import { doLogin, doRegister } from "../../redux/actions";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { routes } from "../../routes";
+
 //import SnackbarUI from "../SnackbarUI/SnackbarUI";
 
 const Login = () => {
@@ -171,9 +172,7 @@ const Login = () => {
                                 value={userDetails.password}
                               />
                             </div>
-                            <div className="pass-link">
-                              <a href="forgotpassword">Forgot password?</a>
-                            </div>
+                            
                             <div className="field btn">
                               <div className="btn-layer"></div>
                               <input
@@ -182,6 +181,14 @@ const Login = () => {
                                 value="Login"
                               />
                             </div>
+                            <Link
+                              style={{ color: "black", textDecoration: "none", paddingLeft: "50%" }}
+                              className="adminText"
+                            to="/forgotPassword"
+                               >
+                                Forgot Password?
+                              </Link>
+
                           </div>
                         ) : (
                           <div className="signupForm">

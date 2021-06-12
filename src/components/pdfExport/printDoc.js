@@ -5,10 +5,10 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 
 
-function printDoc(printParams, gridApi, columnApi) {
+function printDoc(printParams, gridApi, columnApi, customerName) {
   console.log("Exporting to PDF...");
-  const docDefinition = getDocDefinition(printParams, gridApi, columnApi);
-  pdfMake.createPdf(docDefinition).download();
+  const docDefinition = getDocDefinition(printParams, gridApi, columnApi, customerName);
+  pdfMake.createPdf(docDefinition).download("Fabric_Report_"+new Date().toISOString().replace(/T/, '_').replace(/\..+/, '')+".pdf");
 }
 
 export default printDoc;

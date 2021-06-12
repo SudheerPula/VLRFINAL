@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { AgGridReact,  AgGridColumn } from "ag-grid-react";
+//import { AgGridReact,  AgGridColumn } from "ag-grid-react";
+import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
+//import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchInventoryData } from "../redux/actions";
-import CustomDropdown from "./CustomDropdown/CustomDropdown";
+//import CustomDropdown from "./CustomDropdown/CustomDropdown";
 import Button from "@material-ui/core/Button";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import { makeStyles } from "@material-ui/core/styles";
 import "./Inventory.css";
 import moment from "moment";
+//import jwt, { JsonWebTokenError } from "jsonwebtoken"
 import printDoc from "./pdfExport/printDoc";
+//import {Logout} from "../components/Logout/Logout";
+//import { WrapText } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -22,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 const getCellStyle = () => {
   return {
-    borderRight: "1px solid #dde2eb", fontSize:'12px'
+    borderRight: "1px solid #dde2eb", fontSize:'12px', textAlign: 'left' 
   }
 }
 
@@ -104,7 +109,7 @@ const Inventory = () => {
   const PDF_PAGE_ORITENTATION = "landscape";
   const PDF_WITH_HEADER_IMAGE = false;
   const PDF_WITH_FOOTER_PAGE_COUNT = true
-  const PDF_HEADER_HEIGHT = 25;
+  const PDF_HEADER_HEIGHT = 40;
   const PDF_ROW_HEIGHT = 15;
 
   const PDF_ODD_BKG_COLOR = "#fcfcfc";
@@ -126,7 +131,8 @@ const Inventory = () => {
   const { userData } = useSelector((state) => state.login);
   const [gridApi, setGridApi] = useState(null);
   const [columnApi, setColumnApi] = useState(null);
-  const { gridData, customerId, loading, totalCutomerFabrics } = useSelector(
+  //const { gridData, customerId, loading, totalCutomerFabrics } = useSelector(
+    const { gridData, loading, totalCutomerFabrics } = useSelector(
     (state) => state.inventory
   );
 
@@ -148,9 +154,15 @@ const Inventory = () => {
   const dispatch = useDispatch();
 
   useEffect(()=>{
-    if(gridData.length===0){
+   // if(gridData?.payload?.response.status !== 200){
+   //   console.log("sds");
+   //   Logout(history)
+   //       }
+    if(gridData?.length===0){
     dispatch(fetchInventoryData({ id: userData.customers[0]?.customerId }));
-  }},[])
+    
+  }},[dispatch, gridData, userData.customers])
+
  //const onCustomerChange = (customer) => {
  //  dispatch(fetchInventoryData({ id: customer }));
  //};
@@ -191,7 +203,7 @@ const Inventory = () => {
       PDF_SELECTED_ROWS_ONLY
     };
 
-    printDoc(printParams, gridApi, columnApi);
+    printDoc(printParams, gridApi, columnApi, userData.customers[0]?.customerName);
   };
 
   function createData(count, prefix) {
@@ -216,7 +228,7 @@ const Inventory = () => {
     <>
       <div
         className="row"
-        style={{ marginTop: "4px", height: '50px', marginLeft: 0, marginRight: 0 }}
+        style={{ marginTop: "1px", height: '50px', marginLeft: 0, marginRight: 0 }}
       >
         <div className="col-sm-12 btn btn-info">
           <p
@@ -306,6 +318,14 @@ const Inventory = () => {
                   getRowStyle={getRowStyle}
                   rowData={gridData}
                   onGridReady={onGridReady}
+                  gridOptions={
+                    {
+                      headerHeight : 22,
+                      floatingFiltersHeight : 28,
+                      rowHeight : 32,
+                      wrapText : true,
+                    }
+                  }
 
                   pinnedBottomRowData={createData(1, "Bottom")}
                   statusBar={{ 

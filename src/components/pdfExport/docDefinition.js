@@ -1,7 +1,8 @@
 export default function getDocDefinition(
   printParams,
   agGridApi,
-  agGridColumnApi
+  agGridColumnApi,
+  customerName
 ) {
   const {
     PDF_HEADER_COLOR,
@@ -35,15 +36,17 @@ export default function getDocDefinition(
 
     const headerRows = columnGroupsToExport ? 2 : 1;
 
-    const header = PDF_WITH_HEADER_IMAGE
-      ? {
-          image: "PDF_Header",
-          width: 350,
+    const header =function(currentPage, pageCount, pageSize) { 
+      return [{
+          text: customerName+" - Fabric Report                Date :"+new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
+          
           alignment: "center",
-          margin: [0, 10, 0, 10]
+          margin: [0, 0, 0, 0]
+          //top: [20]
 
-        }
-      : null;
+        }];
+      };
+     
 
     const footer = PDF_WITH_FOOTER_PAGE_COUNT
       ? function(currentPage, pageCount) {
@@ -193,7 +196,11 @@ export default function getDocDefinition(
         return;
       }
       let rowToExport = columnsToExport.map(({ colId }) => {
-        let cellValue = agGridApi.getValue(colId, node);
+        var cellValue = agGridApi.getValue(colId, node);
+        if(["onHandQty","committedQty","availableQty","openPOQty"].some(colName => colId === colName)) {
+          cellValue = Math.floor(cellValue).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+        
         let tableCell = createTableCell(cellValue, colId);
         return tableCell;
       });
