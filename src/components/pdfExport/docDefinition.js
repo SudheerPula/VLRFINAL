@@ -41,7 +41,7 @@ export default function getDocDefinition(
           text: customerName+" - Fabric Report                Date :"+new Date().toISOString().replace(/T/, ' ').replace(/\..+/, ''),
           
           alignment: "center",
-          margin: [0, 0, 0, 0]
+          margin: [0, 5, 0, 0]
           //top: [20]
 
         }];
@@ -117,7 +117,7 @@ export default function getDocDefinition(
       },
       styles: {
         myTable: {
-          margin: [0, 0, 0, 0]
+          margin: [0, 15, 0, 0]
         },
         tableHeader: {
           bold: true,
@@ -197,8 +197,8 @@ export default function getDocDefinition(
       }
       let rowToExport = columnsToExport.map(({ colId }) => {
         var cellValue = agGridApi.getValue(colId, node);
-        if(["onHandQty","committedQty","availableQty","openPOQty"].some(colName => colId === colName)) {
-          cellValue = Math.floor(cellValue).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        if(cellValue !== undefined && ["onHandQty","committedQty","availableQty","openPOQty"].some(colName => colId === colName)) {
+          cellValue = cellValue.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         }
         
         let tableCell = createTableCell(cellValue, colId);

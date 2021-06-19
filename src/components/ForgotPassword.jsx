@@ -1,27 +1,48 @@
 import React from "react";
-//import { useDispatch, useSelector } from "react-redux";
+import { useDispatch,useSelector} from "react-redux";
+import { doForgotPassword } from "../redux/actions";
+import { Redirect } from "react-router-dom";
+import { routes } from "../routes";
+
 
 function ForgotPassword() {
-
+   const dispatch = useDispatch();
+    
+   const [emailDetails, setEmailDetails] = React.useState({email: "" });
+   const { login } = useSelector((state) => state);
+   if (login.forgotPasswordSuccess) {
+    alert("Reset Password email sent successfully.")
+   return <Redirect to={routes.LOGIN} />;
+ }
    const invalidEmailArray = ["@gmail.com","@yahoo.com", "@hotmail.com","@outlook.com"];
-  
+
+   const handleRegisterChange = (event) => {
+      const registerData = { ...emailDetails };
+      const { value } = event.target;
+      registerData.email = value;
+      setEmailDetails(registerData);
+    }
    function validateCorporateEmail(email){
      return invalidEmailArray.some(invalidEmail => email.endsWith(invalidEmail)); 
      
    }
-   const handleForgotPassword = (email) => {
-      if (email !== "undefined") {         
+   const handleForgotPassword = () => {
+      if (emailDetails.email !== "undefined") {         
          var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
-         if (!pattern.test(email)) {    
+         if (!pattern.test(emailDetails.email)) {    
             alert("Invalid Email Entered");
            return;
          }
-         if(validateCorporateEmail(email)) {
+         if(validateCorporateEmail(emailDetails.email)) {
            alert("Please use only corporate email ID");
            return;
          }
+        const email1 = emailDetails.email;
+        dispatch(doForgotPassword({email:email1}));
+        //dispatch(doGetAllUsers());
        }
    }
+
 
     return (
       <>
@@ -45,20 +66,21 @@ function ForgotPassword() {
          <div className="form-container">
            
             <div className="form-inner">
-               <form action="ResetLink" className="login">
+            <form action="ResetLink" className="login">
                   <div className="field">
-                     <input type="text" placeholder="Email Address" required autoComplete="Email" /> 
+                     <input type="text" onChange = {handleRegisterChange} 
+                      placeholder="Email Address" required  /> 
                   </div>
                   <br />
                 
                   <div className="field btn">
                      <div className="btn-layer"></div>
 					   
-                     <input type="submit" value="Send Link" />
+                     <input type="submit" value="Submit" onClick={handleForgotPassword}/>
 					 
                   </div>
-                 
-               </form>
+              </form>   
+             
             
             </div>
          </div>

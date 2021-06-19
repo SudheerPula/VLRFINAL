@@ -5,7 +5,7 @@ const initialState = {
   gridData: [],
   loading: false,
   customerId: "",
-  totalCutomerFabrics: {
+  totalCustomerFabrics: {
     availableQty: '',
     committedQty: '',
     description: "Total",
@@ -31,7 +31,7 @@ const inventorySlice = createSlice({
       state.loading = false;
       state.gridData = action.payload.fabricInventory;
       state.customerId = action.payload.customerId;
-      state.totalCutomerFabrics = action.payload.totalCutomerFabrics;
+      state.totalCustomerFabrics = action.payload.totalCustomerFabrics;
     },
     [fetchInventoryData.rejected]: (state, action) => {
       state.loading = false;

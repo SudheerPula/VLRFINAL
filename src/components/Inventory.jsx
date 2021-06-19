@@ -20,8 +20,10 @@ import printDoc from "./pdfExport/printDoc";
 const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(1),
-    marginTop: 0,
-    backgroundColor: "#28729e",
+    marginTop: 8,
+    backgroundColor: "#283db1",
+    height: "36%",
+   //backgroundColor:  rgb(33,150,243 / 40%),
   },
 }));
 
@@ -37,10 +39,13 @@ const getCellNumberStyle = () => {
   }
 }
 
+
 function currencyFormatter(currency, sign) {
+  if(currency !== undefined) {
   var sansDec = currency.toFixed(2);
   var formatted = sansDec.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   return sign + `${formatted}`;
+  }
 }
 
 const columnDefs = [
@@ -65,6 +70,7 @@ const columnDefs = [
     field: "description",
     suppressMenu: true,
     filter: "agTextColumnFilter",
+    resizable: true,
     width: 300,
     cellClass: "inventoryCell",
     cellStyle: getCellStyle()
@@ -76,14 +82,14 @@ const columnDefs = [
     cellClass: "inventoryCell",
     textAlign: "right",
     cellStyle: getCellNumberStyle(),
-    valueFormatter: param => currencyFormatter(Math.floor(param.data.onHandQty), '')
+    valueFormatter: param => currencyFormatter(param.data.onHandQty, '')
   },
   {
     headerName: "Committed",
     field: "committedQty",
     filter: false,
     cellStyle: getCellNumberStyle(),
-    valueFormatter: param => currencyFormatter(Math.floor(param.data.committedQty), '')
+    valueFormatter: param => currencyFormatter(param.data.committedQty, '')
   },
   {
     headerName: "Available",
@@ -91,7 +97,8 @@ const columnDefs = [
     filter: false,
     cellClass: "inventoryCell",
     cellStyle: getCellNumberStyle(),
-    valueFormatter: param => currencyFormatter(Math.floor(param.data.availableQty), '')
+    valueFormatter: param => currencyFormatter(param.data.availableQty, '')
+    //valueFormatter: param => currencyFormatter(param.data.availableQty, '')
   },
   {
     headerName: "Open PO Qty",
@@ -99,7 +106,15 @@ const columnDefs = [
     filter: false,
     cellClass: "inventoryCell",
     cellStyle: getCellNumberStyle(),
-    valueFormatter: param => currencyFormatter(Math.floor(param.data.openPOQty), '')
+    valueFormatter: param => currencyFormatter(param.data.openPOQty, '')
+  },
+  {
+    headerName: "Defect Qty",
+    field: "defectiveQty",
+    filter: false,
+    cellClass: "inventoryCell",
+    cellStyle: getCellNumberStyle(),
+    valueFormatter: param => currencyFormatter(param.data.openPOQty, '')
   },
 ];
 
@@ -109,7 +124,7 @@ const Inventory = () => {
   const PDF_PAGE_ORITENTATION = "landscape";
   const PDF_WITH_HEADER_IMAGE = false;
   const PDF_WITH_FOOTER_PAGE_COUNT = true
-  const PDF_HEADER_HEIGHT = 40;
+  const PDF_HEADER_HEIGHT = 25;
   const PDF_ROW_HEIGHT = 15;
 
   const PDF_ODD_BKG_COLOR = "#fcfcfc";
@@ -128,11 +143,12 @@ const Inventory = () => {
 
 
   const classes = useStyles();
+  //var altColor = false;
   const { userData } = useSelector((state) => state.login);
   const [gridApi, setGridApi] = useState(null);
   const [columnApi, setColumnApi] = useState(null);
   //const { gridData, customerId, loading, totalCutomerFabrics } = useSelector(
-    const { gridData, loading, totalCutomerFabrics } = useSelector(
+    const { gridData, loading, totalCustomerFabrics } = useSelector(
     (state) => state.inventory
   );
 
@@ -163,23 +179,16 @@ const Inventory = () => {
     
   }},[dispatch, gridData, userData.customers])
 
- //const onCustomerChange = (customer) => {
- //  dispatch(fetchInventoryData({ id: customer }));
- //};
-
-  // useEffect(() => {
-  //   if(userData.customers.length > 0 ){
-  //     console.log(userData.customers[0].customerId)
-  //   }
-  // }, [dispatch, userData.customers]);
-
-  const getRowStyle = (params) => {
-    if (params.node.rowIndex % 2 === 0) {
-      return { background: "#fff8" };
-    } else {
-      return { background: "#e3e9eb" };
-    }
-  };
+ 
+  //const getRowStyle = (params) => {
+    //if (!altColor) {
+     // altColor = true;
+      //return { background: "#fff8" };
+    //} else {
+      //altColor = false;
+      //return { background: "#e3e9eb" };
+    //}
+  //};
 
   const onCSVExport = () => {
     gridApi.exportDataAsCsv();
@@ -210,14 +219,14 @@ const Inventory = () => {
     var result = [];
     for (var i = 0; i < count; i++) {
       result.push({
-        availableQty: totalCutomerFabrics.totaCommittedQty,
-        committedQty: totalCutomerFabrics.totalAvailableQty,
+        availableQty: totalCustomerFabrics.totaCommittedQty,
+        committedQty: totalCustomerFabrics.totalAvailableQty,
         description: "Total",
         fabricId: undefined,
         id: undefined,
         inventoryStats: undefined,
-        onHandQty: totalCutomerFabrics.totalOnHandQty,
-        openPOQty: totalCutomerFabrics.totalOpenPOQty,
+        onHandQty: totalCustomerFabrics.totalOnHandQty,
+        openPOQty: totalCustomerFabrics.totalOpenPOQty,
         sku: undefined,
       });
     }
@@ -234,7 +243,7 @@ const Inventory = () => {
           <p
             style={{
               display: "inline",
-              paddingLeft: "23%",
+              paddingLeft: "30%",
               paddingTop: "0.2%",
               fontWeight: 'bold',
               fontSize: '24px'
@@ -245,8 +254,20 @@ const Inventory = () => {
           <p
             style={{
               display: "inline",
+              paddingLeft: "8%",
+              paddingTop: "0.2%",
+              fontWeight: 'italic',
+              fontSize: '14px'
+            }}
+          >
+                  {moment().format("MMMM Do YYYY, h:mm:ss a")}
+          </p>
+                   
+          <p
+            style={{
+              display: "inline",
               float: "right",
-              paddingRight: "6%",
+              paddingRight: "20%",
               paddingTop: "0.2%",
             }}
           >
@@ -258,7 +279,6 @@ const Inventory = () => {
               marginRight: "-1%",
               marginTop: "-3%",
             }}>
-              {moment().format("MMMM Do YYYY, h:mm:ss a")}
           </p>
         </div>
       </div>
@@ -268,18 +288,11 @@ const Inventory = () => {
           className="col-md-12"
         >
           <div className="card">
-            <div className="row" style={{ marginTop: "2%", marginLeft: "1%" }}>
+            <div className="row" style={{ marginTop: "2%", marginLeft: "0%" }}>
               <div className="col-md-4 text-left classtopcustomer" style={{fontSize: '22px'}}>
               {userData.customers[0]?.customerName}
               </div>
-              {/* <div className="col-md-5 text-left">
-                <img
-                  src="images/williams_sonoma.png"
-                  className="otherLogo"
-                  alt=""
-                />
-              </div> */}
-              <div className="col-md-3 text-right" style={{marginTop: '-70px', marginLeft: '38%' }}>
+              <div className="col-md-3 text-right" style={{marginTop: '-72px', marginLeft: '40%' }}>
                 <Button
                   variant="contained"
                   color="primary"
@@ -315,14 +328,14 @@ const Inventory = () => {
                   }}
                   columnDefs={columnDefs}
                   onFirstDataRendered={onFirstDataRendered}
-                  getRowStyle={getRowStyle}
+                  //getRowStyle={getRowStyle}
                   rowData={gridData}
                   onGridReady={onGridReady}
                   gridOptions={
                     {
                       headerHeight : 22,
                       floatingFiltersHeight : 28,
-                      rowHeight : 32,
+                      rowHeight : 30,
                       wrapText : true,
                     }
                   }

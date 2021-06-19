@@ -1,7 +1,7 @@
 import { axios } from "../../config/config";
 import { path } from "../path";
 import md5 from 'md5'
-import { RepeatOneSharp } from "@material-ui/icons";
+//import { RepeatOneSharp } from "@material-ui/icons";
 
 export function login({ email, password }) {
   const params = {
@@ -35,4 +35,15 @@ export function register({ email, password, userName }) {
 
 export function forgotPassword({email}) {
   return axios.post(path.FORGOTPASSWORD, {email}).then((response) => response.data);
+}
+
+export function resetPassword({password, authToken}) {
+  const params = {
+    email : "email",
+    password : md5(password),
+    userName : "userName"
+  };
+  //const password: md5(password), 
+  const options = {headers : {"Authorization" : "Bearer " + authToken, 'Content-Type': 'application/json'}};
+  return axios.post(path.RESETPASSWORD,params, options).then((response) => response.data);
 }

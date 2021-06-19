@@ -69,14 +69,14 @@ const Login = () => {
       return;
     }
     var pass = userRegister.password;
-    var pattern = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/);
+    var pattern = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&+=_-|])[A-Za-z\d@$!%*?&+=_-|]{8,}$/);
     if (!pattern.test(pass)) { 
       alert('Password must contain 1 Numeric, one Uppercase, One Lowercase and one special character and atleast 8 characters'); 
       }else if (userRegister.password !== userRegister.cnfpassword)
       {
         alert("Passwords do not match");
       } else{
-        alert('Successfully Registered');
+        
         const { email, password, userName } = userRegister;
         dispatch(doRegister({ email, password, userName }));
       } 
@@ -100,6 +100,7 @@ const Login = () => {
     setIsLogin(!isLogin);
   };
 
+  
   if (login.authenticated) {
     return <Redirect to={routes.INVENTORY} />;
   }

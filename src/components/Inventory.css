@@ -20,13 +20,14 @@
 
   .ag-header-cell{
     /* Necessary to allow for text to grow vertically */
-    background: -webkit-linear-gradient(top, #64c7f8, #1a8fb6);
+    background-color: #283db1;
     border-right: #ccc 1px solid;
     
   }
+  
 
   .btn-info {
-    background: -webkit-linear-gradient(top, #64c7f8, #1a8fb6);
+    background-color: #283db1;
   }
   
   .ag-floating-filter-input{
@@ -43,7 +44,7 @@
   }
 
   .inventoryContainer{
-    background: -webkit-linear-gradient(left, #c4e0e5, #629fa8);
+    background-color: #283db1;
   }
   .ag-header-cell .ag-header-cell-resize {
     display: block !important;
@@ -62,9 +63,23 @@
   }
 
   .ag-header-cell .ag-header-cell-text {
-    color: black;
+    color: white;
     padding-left: 30%;
   }
 
+  .ag-header-container {
+    background-color:#283db1;
+  }
 
+  .ag-row-event {
+    background:#fff8
+  }
+
+  .ag-row-odd {
+    background: #e3e9eb;
+  }
+
+  .ag-header-viewport{
+    background-color: #283db1;
+  }
  

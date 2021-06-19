@@ -163,7 +163,7 @@ tr:nth-child(even) {
   left: 0;
   z-index: 0;
   border-radius: 5px;
-  background: -webkit-linear-gradient(left, #c4e0e5, #4ca1af);
+  background-color: #283db1;
   transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
 }
 input[type="radio"]{
@@ -255,7 +255,7 @@ form .btn .btn-layer{
   width: 300%;
   position: absolute;
   left: -100%;
-  background: -webkit-linear-gradient(right, #c4e0e5, #4ca1af, #c4e0e5, #4ca1af);
+  background: #283db1;
   border-radius: 5px;
   transition: all 0.4s ease;;
 }
