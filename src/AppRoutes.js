@@ -6,8 +6,9 @@ import {
   Home,
   Login,
   ResetLink,
+  
 } from "./components";
-import Admin from "./components/Admin/Admin";
+import VerticalTabs from "./components/Admin/Admin";
 import Profile from "./components/Profile/Profile";
 import PrivateRoute from "./PrivateRoute";
 import { routes } from "./routes";
@@ -26,6 +27,17 @@ const AppRoutes = ({ authenticated }) => {
           />
         )}
       />
+       <Route
+        path={routes.FORGETPASSWORD}        
+        exact
+        component={() => <ForgotPassword />}
+      />
+      <Route
+        path={routes.RESETLINK}
+        exact
+        
+        component={() => <ResetLink />}
+      />
       <Route exact path={routes.LOGIN} component={() => <Login />} />
       <PrivateRoute
         path={routes.INVENTORY}
@@ -42,7 +54,7 @@ const AppRoutes = ({ authenticated }) => {
       <PrivateRoute
         path={routes.ADMIN}
         exact
-        component={() => <Admin />}
+        component={() => <VerticalTabs />}
         authenticated={authenticated}
       />
       <PrivateRoute
@@ -51,18 +63,8 @@ const AppRoutes = ({ authenticated }) => {
         component={() => <Home />}
         authenticated={authenticated}
       />
-      <PrivateRoute
-        path={routes.FORGETPASSWORD}
-        authenticated={authenticated}
-        exact
-        component={() => <ForgotPassword />}
-      />
-      <PrivateRoute
-        path={routes.RESETLINK}
-        exact
-        authenticated={authenticated}
-        component={() => <ResetLink />}
-      />
+        
+     {/* <Redirect from ="*" to="/" />*/}
     </Switch>
   );
 };

@@ -15,17 +15,18 @@
   width: 200%;
 }
 .wrapper .title {
-  width: 50%;
+  width: 45%;
   font-size: 35px;
+  font-style: italic;
   font-weight: 600;
   text-align: center;
-  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 .wrapper .slide-controls {
   position: relative;
   display: flex;
   height: 50px;
-  width: 100%;
+  width: 75%;
   overflow: hidden;
   margin: 30px 0 10px 0;
   justify-content: space-between;
@@ -65,7 +66,7 @@
   left: 0;
   z-index: 0;
   border-radius: 5px;
-  background: -webkit-linear-gradient(left, #c4e0e5, #4ca1af);
+  background-color: #283db1;
   transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 input[type="radio"] {
@@ -92,14 +93,16 @@ input[type="radio"] {
 .wrapper .form-container {
   width: 100%;
   overflow: hidden;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-style: italic;
 }
 .form-container .form-inner {
   display: flex;
-  width: 200%;
+  width: 150%;
 }
 .loginForm {
   width: 50%;
-  transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 .loginForm .field {
   height: 50px;
@@ -156,13 +159,7 @@ input[type="radio"] {
   width: 300%;
   position: absolute;
   left: -100%;
-  background: -webkit-linear-gradient(
-    right,
-    #c4e0e5,
-    #4ca1af,
-    #c4e0e5,
-    #4ca1af
-  );
+  background-color: #283db1;
   border-radius: 5px;
   transition: all 0.4s ease;
 }

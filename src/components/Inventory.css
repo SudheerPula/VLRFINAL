@@ -10,19 +10,26 @@
   }
 
   .ag-floating-bottom-container .ag-row .ag-cell {
-    color: blue
+    color:  #2370e4
   }
  
   .ag-theme-alpine .ag-row:nth-child(even) {  
-    background-color: #9bc0c7; 	
+    background-color:#f7f7f9;; 	
   }  
+
 
   .ag-header-cell{
     /* Necessary to allow for text to grow vertically */
-    background: -webkit-linear-gradient(top, #0f719e, #4ca1af);
-    color: #fff;
+    background-color: #283db1;
+    border-right: #ccc 1px solid;
     
   }
+  
+
+  .btn-info {
+    background-color: #283db1;
+  }
+  
   .ag-floating-filter-input{
     color: #000 !important;
   }
@@ -37,7 +44,7 @@
   }
 
   .inventoryContainer{
-    background: -webkit-linear-gradient(left, #c4e0e5, #4ca1af);
+    background-color: #283db1;
   }
   .ag-header-cell .ag-header-cell-resize {
     display: block !important;
@@ -56,5 +63,23 @@
   }
 
   .ag-header-cell .ag-header-cell-text {
+    color: white;
     padding-left: 30%;
   }
+
+  .ag-header-container {
+    background-color:#283db1;
+  }
+
+  .ag-row-event {
+    background:#fff8
+  }
+
+  .ag-row-odd {
+    background: #e3e9eb;
+  }
+
+  .ag-header-viewport{
+    background-color: #283db1;
+  }
+ 

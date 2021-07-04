@@ -8,15 +8,18 @@ import Menu from "@material-ui/core/Menu";
 import { Link } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+//import { useHistory } from "react-router-dom";
 import { withRouter } from "react-router";
-import { routes } from "../../routes";
+//import { routes } from "../../routes";
+import {Logout} from "../Logout/Logout";
+
 
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
     "& .MuiAppBar-colorPrimary": {
-      background: "-webkit-linear-gradient(left, #c4e0e5, #4ca1af)"
+      //background: "-webkit-linear-gradient(right, #64c7f8, #1a8fb6)"
+      background: "#283db1"
     },
   },
   menuButton: {
@@ -81,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
 
 const NavBar = () => {
   const { userData, authenticated } = useSelector((state) => state.login);
-  const history = useHistory();
+//  const history = useHistory();
   var randomColor = Math.floor(Math.random() * 16777215).toString(16);
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -98,9 +101,7 @@ const NavBar = () => {
 
   const handleLogout = () => {
     handleMenuClose();
-    localStorage.clear();
-    history.push(routes.LOGIN);
-    window.location.reload();
+    Logout()
   };
 
   const menuId = "primary-search-account-menu";
@@ -127,13 +128,25 @@ const NavBar = () => {
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          <Link className="navbar-brand" to="/inventory">
-            <img src="images/logo.png" style={{width: '25%',marginLeft: '-2%'}} className="imgSize" alt="" />
-          </Link>
+        <div>
+              {" "}
+              <center>
+              <Link
+                  style={{ color: "#fff", textDecoration: "none", fontSize: "2rem", fontStyle:"italic",fontFamily:"roboto" }}
+                  className="text-center"
+                  to="/inventory"
+                >
+                  VLR, LLC
+                </Link>
+              </center>
+            </div>
+            <div>
+            </div>           
+ 
           <div className={classes.grow} />
           {authenticated ? (
             <div className={classes.sectionDesktop}>
-              <p className="welcomeTitle">Welcome: {userData.userName}</p>
+              <p className="welcomeTitle" > Welcome: {userData.userName}</p>
               {userData.admin ? <IconButton
                 edge="end"
                 aria-label="account of current user"
@@ -169,7 +182,7 @@ const NavBar = () => {
             <div>
               {" "}
               <center>
-                <h2 className="text-center">Welcome to Stone & Leigh</h2>{" "}
+                <h2 className="text-center" style={{fontStyle:"italic",fontFamily:"roboto"}}>Welcome to VLR, LLC</h2>{" "}
               </center>
             </div>
           )}

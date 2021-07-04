@@ -17,7 +17,7 @@ function Home() {
         <div className="container">
           <div className="row">
             <div className="col-12">
-              <h1 className="text-center">Welcome to Stone & Leigh</h1>
+              <p1 font-style='italic'> Welcome to VLR, LLC</p1>
 
               
 

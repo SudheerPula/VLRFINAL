@@ -1,9 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { doLogin, doRegister } from "../actions";
+import { doLogin, doRegister, doForgotPassword, doResetPassword} from "../actions";
 
 const initialState = {
   authenticated: localStorage.getItem("token") ? true : false,
+  resetPasswordSuccess: false,
+  forgotPasswordSuccess: false,
   authorizing: false,
+  loading: false,
   userData: localStorage.getItem("userData")
     ? JSON.parse(localStorage.getItem("userData"))
     : {
@@ -40,6 +43,28 @@ const loginSlice = createSlice({
     },
     [doRegister.rejected]: (state, action) => {
       state.registering = false;
+      state.error = action.payload.message;
+    },
+    [doForgotPassword.pending]: (state) => {
+      state.loading = true;
+    },
+    [doForgotPassword.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.forgotPasswordSuccess = true;
+    },
+    [doForgotPassword.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload.message;
+    },
+    [doResetPassword.pending]: (state) => {
+      state.loading = true;
+    },
+    [doResetPassword.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.resetPasswordSuccess = true;
+    },
+    [doResetPassword.rejected]: (state, action) => {
+      state.loading = false;
       state.error = action.payload.message;
     },
   },

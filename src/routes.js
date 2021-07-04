@@ -4,7 +4,8 @@ export const routes = {
     INVENTORY:'/inventory',
     HOMECONTENT:'/home',
     FORGETPASSWORD:'/forgotPassword',
-    RESETLINK:'/resetLink',
+    RESETLINK:'/resetPassword',
     ADMIN: '/admin',
-    PROFILE:'/profile'
+    PROFILE:'/profile',
+    ADDAPPLICATION: '/Addapplications'
 }
