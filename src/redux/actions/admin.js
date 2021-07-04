@@ -1,11 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getAdminUserData, addRole, addApplication, addCustomer, getCustomers, getApplications, getRoles } from "../../util/Api/admin";
+import { getAdminUserData, addRole, addApplication, addCustomer, getCustomers, getApplications, getRoles, updateUser } from "../../util/Api/admin";
 
 export const doGetAllUsers = createAsyncThunk(
     "getAllUsers",
-    async ( _, { rejectWithValue }) => {
+    async ( {reloadUserData}, { rejectWithValue }) => {
       try {
-        const resp = await getAdminUserData();
+        const resp = await getAdminUserData(reloadUserData);
         return resp;
       } catch (err) {
         //alert("No Users listed");
@@ -95,6 +95,19 @@ export const doGetAllUsers = createAsyncThunk(
         //alert("No Users listed");
       
       return rejectWithValue(err);
+      }
+    }
+  );
+
+  export const doUpdateUser = createAsyncThunk(
+    "updateUser",
+    async ( {user}, { rejectWithValue }) => {
+      try {
+        const resp = await updateUser(user);
+        return resp;
+      } catch (err) {
+        
+        return rejectWithValue(err);
       }
     }
   );

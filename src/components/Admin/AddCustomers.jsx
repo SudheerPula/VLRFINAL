@@ -87,13 +87,13 @@ export default function AddCustomers(props) {
       id={`vertical-tabpanel-${index}`}
       aria-labelledby={`vertical-tab-${index}`}
       {...other}
-      style={{ marginLeft: "10%", marginTop: "4%", width: "50%" }}
+      style={{ marginLeft: "10%", marginTop: "4%", width: "60%" }}
     >
 
 
-      <TextField id="outlined-cutomer-name" label="Customer Name" variant="outlined" onChange={handleCustomerChange} />
-      <TextField id="outlined-customer-id" label="Customer Id" variant="outlined" onChange={handleCustomerIdChange} />
-      <TextField id="outlined-description" label="Description" variant="outlined" onChange={handleDescriptionChange} />
+      <TextField style={{width:"25%"}} size="small" id="outlined-cutomer-name" label="Customer Name" variant="outlined" onChange={handleCustomerChange} />
+      <TextField style={{width:"25%"}} size="small" id="outlined-customer-id" label="Customer Id" variant="outlined" onChange={handleCustomerIdChange} />
+      <TextField style={{width:"25%"}} size="small" id="outlined-description" label="Description" variant="outlined" onChange={handleDescriptionChange} />
       <Button variant="contained" color="primary" style={{ marginLeft: "4%" }} onClick={addCustomer}>
         Add Customer
       </Button>
@@ -109,7 +109,7 @@ export default function AddCustomers(props) {
                   <TableCell
                     key={column.id}
                     align={column.align}
-                    style={{ minWidth: column.minWidth }}
+                    style={{ minWidth: column.minWidth, color:'#fff' }}
                   >
                     {column.label}
                   </TableCell>

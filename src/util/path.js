@@ -11,6 +11,7 @@ export const path = {
     ADDROLE : 'roles/add',
     GETROLES : 'roles/list',
     ADDCUSTOMER: 'customer/add',
-    GETCUSTOMERS: 'customer/list'
+    GETCUSTOMERS: 'customer/list',
+    UPDATEUSER: 'user/update'
 
 }

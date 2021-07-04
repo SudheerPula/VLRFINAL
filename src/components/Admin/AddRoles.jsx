@@ -77,7 +77,7 @@ export default function AddRoles(props) {
     >
 
 
-      <TextField id="outlined-basic" label="New Roles" variant="outlined" onChange={handleRoleChange} />
+      <TextField size="small" id="outlined-basic" label="New Roles" variant="outlined" onChange={handleRoleChange} />
       <Button variant="contained" color="primary" style={{ marginLeft: "4%" }} onClick={addRole}>
         Add Roles
       </Button>
@@ -93,7 +93,7 @@ export default function AddRoles(props) {
                   <TableCell
                     key={column.id}
                     align={column.align}
-                    style={{ minWidth: column.minWidth }}
+                    style={{ minWidth: column.minWidth, color: '#fff' }}
                   >
                     {column.label}
                   </TableCell>

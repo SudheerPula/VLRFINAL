@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {doGetAllUsers, doAddRole, doGetRoles, doGetApplications, doGetCustomers, doAddApplication, doAddCustomer } from "../actions";
+import {doGetAllUsers, doAddRole, doGetRoles, doGetApplications, doGetCustomers, doAddApplication, doAddCustomer, doUpdateUser } from "../actions";
 
 
 const initialState = {
@@ -12,7 +12,8 @@ const initialState = {
   },
   rolesData: [],
   applicationsData: [],
-  customersData: []
+  customersData: [],
+  reloadUserData: false
 
 };
 const adminSlice = createSlice({
@@ -26,10 +27,12 @@ const adminSlice = createSlice({
     [doGetAllUsers.fulfilled]: (state, action) => {
       state.loading = false;
       state.userData = action.payload;
+      state.reloadUserData = false;
     },
     [doGetAllUsers.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload;
+      state.reloadUserData = false;
     },
 
     //addRole
@@ -104,6 +107,19 @@ const adminSlice = createSlice({
       state.loading = false;
     },
     [doAddCustomer.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+
+    //update User 
+    [doUpdateUser.pending]: (state) => {
+      state.loading = true;
+    },
+    [doUpdateUser.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.reloadUserData = true;
+    },
+    [doUpdateUser.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },

@@ -131,7 +131,13 @@ const NavBar = () => {
         <div>
               {" "}
               <center>
-                <h2 className="text-center" style={{fontStyle:"italic",fontFamily:"roboto"}}>VLR, LLC</h2>{" "}
+              <Link
+                  style={{ color: "#fff", textDecoration: "none", fontSize: "2rem", fontStyle:"italic",fontFamily:"roboto" }}
+                  className="text-center"
+                  to="/inventory"
+                >
+                  VLR, LLC
+                </Link>
               </center>
             </div>
             <div>

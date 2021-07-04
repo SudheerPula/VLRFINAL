@@ -114,7 +114,7 @@ const columnDefs = [
     filter: false,
     cellClass: "inventoryCell",
     cellStyle: getCellNumberStyle(),
-    valueFormatter: param => currencyFormatter(param.data.openPOQty, '')
+    valueFormatter: param => currencyFormatter(param.data.defectiveQty, '')
   },
 ];
 
@@ -219,14 +219,15 @@ const Inventory = () => {
     var result = [];
     for (var i = 0; i < count; i++) {
       result.push({
-        availableQty: totalCustomerFabrics.totaCommittedQty,
-        committedQty: totalCustomerFabrics.totalAvailableQty,
+        availableQty: totalCustomerFabrics.totalAvailableQty,
+        committedQty: totalCustomerFabrics.totaCommittedQty,
         description: "Total",
         fabricId: undefined,
         id: undefined,
         inventoryStats: undefined,
         onHandQty: totalCustomerFabrics.totalOnHandQty,
         openPOQty: totalCustomerFabrics.totalOpenPOQty,
+        defectiveQty: totalCustomerFabrics.totalDefectiveQty,
         sku: undefined,
       });
     }
