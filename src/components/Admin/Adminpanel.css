@@ -1,0 +1,82 @@
+body{
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.btn-info{
+    width: 100%;
+}
+
+a{
+	color:#086270;
+    font-size: 16px;
+    font-weight:700;
+}
+
+a:hover{
+    text-decoration: none;
+}
+
+table{
+    background-color: #4ca1af;
+    color:#fff;
+}
+
+table {
+    border: 1px solid #666;
+    width: 98%;
+        
+        border-collapse: collapse;
+         overflow-y: hidden;
+         white-space: nowrap;
+           box-shadow: 10px 10px 5px #ccc;
+          -moz-box-shadow: 10px 10px 5px #ccc;
+          -webkit-box-shadow: 10px 10px 5px #ccc;
+          -khtml-box-shadow: 10px 10px 5px #ccc;
+        
+    }
+    th,
+    td {
+       padding: 10px 15px;
+        border: 1px #ccc solid;
+        }
+    th {
+      font-weight: 400;
+        background: mediumblue;
+        text-align:center;
+        color:#fff;
+    }
+    
+    tr:nth-child(even) {  
+      background-color: #fff !important;  
+      color: #000 !important;
+        
+    }  
+    
+    .tdrow1{
+        background-color: #4ca1af;
+    }
+    
+    .tdrow2{
+        background-color: #0f719e;
+    
+    }
+
+    .leftalign{
+        text-align:left;
+    }
+
+    .tback{
+        background-color: #fff;
+        color: #000;
+    }
+
+   .tbacktr:nth-child(even) {  
+        background-color: #fff !important;  
+          
+      } 
+      
+      .headerRowColor{
+        background-color:#4ca1af;
+        color:white;
+      }
+    

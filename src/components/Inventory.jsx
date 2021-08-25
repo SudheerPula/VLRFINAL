@@ -77,12 +77,14 @@ const columnDefs = [
   },
   {
     headerName: "On Hand",
-    field: "onHandQty",
+    //field: "onHandQty",
+    field: "availableQty",
     filter: false,
     cellClass: "inventoryCell",
     textAlign: "right",
     cellStyle: getCellNumberStyle(),
-    valueFormatter: param => currencyFormatter(param.data.onHandQty, '')
+    valueFormatter: param => currencyFormatter(param.data.availableQty, '')
+    //valueFormatter: param => currencyFormatter(param.data.onHandQty, '')
   },
   {
     headerName: "Committed",
@@ -92,12 +94,15 @@ const columnDefs = [
     valueFormatter: param => currencyFormatter(param.data.committedQty, '')
   },
   {
-    headerName: "Available",
-    field: "availableQty",
+    //headerName: "Available",
+    headerName: "Net Available",
+    //field: "availableQty",
+    field: "onHandQty",
     filter: false,
     cellClass: "inventoryCell",
     cellStyle: getCellNumberStyle(),
-    valueFormatter: param => currencyFormatter(param.data.availableQty, '')
+    valueFormatter: param => currencyFormatter(param.data.onHandQty, '')
+    //valueFormatter: param => currencyFormatter(param.data.availableQty, '')
     //valueFormatter: param => currencyFormatter(param.data.availableQty, '')
   },
   {
@@ -219,13 +224,13 @@ const Inventory = () => {
     var result = [];
     for (var i = 0; i < count; i++) {
       result.push({
-        availableQty: totalCustomerFabrics.totalAvailableQty,
+        onHandQty: totalCustomerFabrics.totalOnHandQty,
         committedQty: totalCustomerFabrics.totaCommittedQty,
         description: "Total",
         fabricId: undefined,
         id: undefined,
         inventoryStats: undefined,
-        onHandQty: totalCustomerFabrics.totalOnHandQty,
+        availableQty: totalCustomerFabrics.totalAvailableQty,
         openPOQty: totalCustomerFabrics.totalOpenPOQty,
         defectiveQty: totalCustomerFabrics.totalDefectiveQty,
         sku: undefined,
