@@ -4,6 +4,7 @@ import { fetchInventoryData } from "../actions";
 const initialState = {
   gridData: [],
   loading: false,
+  dataNotFound: false,
   customerId: "",
   totalCustomerFabrics: {
     availableQty: '',
@@ -30,6 +31,11 @@ const inventorySlice = createSlice({
     [fetchInventoryData.fulfilled]: (state, action) => {
       state.loading = false;
       state.gridData = action.payload.fabricInventory;
+      if(state.gridData?.length===0) {
+        state.dataNotFound = true;
+      } else {
+        state.dataNotFound = false;
+      }
       state.customerId = action.payload.customerId;
       state.totalCustomerFabrics = action.payload.totalCustomerFabrics;
     },
