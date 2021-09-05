@@ -5,6 +5,7 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 //import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import {useLocation} from "react-router-dom";
 import { fetchInventoryData } from "../redux/actions";
 //import CustomDropdown from "./CustomDropdown/CustomDropdown";
 import Button from "@material-ui/core/Button";
@@ -124,7 +125,8 @@ const columnDefs = [
 ];
 
 
-const Inventory = () => {
+const Inventory = (props) => {
+  console.log()
   //pdf attributes
   const PDF_PAGE_ORITENTATION = "landscape";
   const PDF_WITH_HEADER_IMAGE = false;
@@ -152,14 +154,23 @@ const Inventory = () => {
   const { userData } = useSelector((state) => state.login);
   const [gridApi, setGridApi] = useState(null);
   const [columnApi, setColumnApi] = useState(null);
+  const [customerName, setCustomerName] = useState(null);
+  const location = useLocation();
+  console.log(location);
   //const { gridData, customerId, loading, totalCutomerFabrics } = useSelector(
-    const { gridData, loading, totalCustomerFabrics } = useSelector(
+    const { gridData, loading, totalCustomerFabrics, dataNotFound } = useSelector(
     (state) => state.inventory
   );
 
   const onGridReady = (params) => {
     setGridApi(params.api);
     setColumnApi(params.columnApi);
+    if(params.columnApi && JSON.parse(localStorage.getItem( 'SelectedOption' )).customerId !== '154239') {
+      params.columnApi.setColumnsVisible(['fabricId'], false);
+      
+    } else {
+      params.columnApi.setColumnsVisible(['sku','fabricId'], true);
+    }
   };
 
 
@@ -174,15 +185,39 @@ const Inventory = () => {
 
   const dispatch = useDispatch();
 
+  if(location.customer) {
+    
+    localStorage.setItem( 'SelectedOption', JSON.stringify((userData.customers.filter((customer) => customer.customerId === location.customer)
+    .map((customer) => customer) )[0]));
+    dispatch(fetchInventoryData({ id: location.customer }));
+    location.customer = undefined;
+   
+  } 
+
   useEffect(()=>{
    // if(gridData?.payload?.response.status !== 200){
    //   console.log("sds");
    //   Logout(history)
    //       }
-    if(gridData?.length===0){
-    dispatch(fetchInventoryData({ id: userData.customers[0]?.customerId }));
+
+   if(gridData?.length===0 && !dataNotFound){
+       
+        var customerSelected = userData.customers.filter((customer) => customer.customerName === 'Williams-Sonoma, Inc' );
+        if(customerSelected[0]?.customerId) {
+          dispatch(fetchInventoryData({ id: customerSelected[0]?.customerId }));
+          setCustomerName(customerSelected[0]?.customerName);
+          localStorage.setItem( 'SelectedOption', JSON.stringify(customerSelected[0] ));
+          
+          
+        } else {
+          dispatch(fetchInventoryData({ id: userData.customers[0]?.customerId }));
+          setCustomerName(userData.customers[0]?.customerName);
+          localStorage.setItem( 'SelectedOption', JSON.stringify(userData.customers[0] ));
+        }
+      }
     
-  }},[dispatch, gridData, userData.customers])
+    
+  },[dispatch, gridData, userData.customers, dataNotFound])
 
  
   //const getRowStyle = (params) => {
@@ -296,7 +331,7 @@ const Inventory = () => {
           <div className="card">
             <div className="row" style={{ marginTop: "2%", marginLeft: "0%" }}>
               <div className="col-md-4 text-left classtopcustomer" style={{fontSize: '22px'}}>
-              {userData.customers[0]?.customerName}
+              {localStorage.getItem( 'SelectedOption' ) ? JSON.parse(localStorage.getItem( 'SelectedOption' )).customerName : ''}
               </div>
               <div className="col-md-3 text-right" style={{marginTop: '-72px', marginLeft: '40%' }}>
                 <Button
