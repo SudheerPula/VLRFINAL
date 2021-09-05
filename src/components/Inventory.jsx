@@ -160,6 +160,10 @@ const Inventory = (props) => {
   const onGridReady = (params) => {
     setGridApi(params.api);
     setColumnApi(params.columnApi);
+    if(params.columnApi && JSON.parse(localStorage.getItem( 'SelectedOption' )).customerId !== '154239') {
+      params.columnApi.setColumnsVisible(['sku','fabricId'], false);
+      
+    }
   };
 
 
@@ -176,8 +180,8 @@ const Inventory = (props) => {
 
   if(location.customer) {
     
-    localStorage.setItem( 'SelectedOption', userData.customers.filter((customer) => customer.customerId === location.customer)
-    .map((customer) => customer.customerName) );
+    localStorage.setItem( 'SelectedOption', JSON.stringify(userData.customers.filter((customer) => customer.customerId === location.customer)
+    .map((customer) => customer) ));
     dispatch(fetchInventoryData({ id: location.customer }));
     location.customer = undefined;
    
@@ -195,12 +199,13 @@ const Inventory = (props) => {
         if(customerSelected[0]?.customerId) {
           dispatch(fetchInventoryData({ id: customerSelected[0]?.customerId }));
           setCustomerName(customerSelected[0]?.customerName);
-          localStorage.setItem( 'SelectedOption', customerSelected[0]?.customerName );
+          localStorage.setItem( 'SelectedOption', JSON.stringify(customerSelected[0] ));
+          
           
         } else {
           dispatch(fetchInventoryData({ id: userData.customers[0]?.customerId }));
           setCustomerName(userData.customers[0]?.customerName);
-          localStorage.setItem( 'SelectedOption', userData.customers[0]?.customerName );
+          localStorage.setItem( 'SelectedOption', JSON.stringify(userData.customers[0] ));
         }
       }
     
@@ -319,7 +324,7 @@ const Inventory = (props) => {
           <div className="card">
             <div className="row" style={{ marginTop: "2%", marginLeft: "0%" }}>
               <div className="col-md-4 text-left classtopcustomer" style={{fontSize: '22px'}}>
-              {localStorage.getItem( 'SelectedOption' )}
+              {JSON.parse(localStorage.getItem( 'SelectedOption' )).customerName}
               </div>
               <div className="col-md-3 text-right" style={{marginTop: '-72px', marginLeft: '40%' }}>
                 <Button
