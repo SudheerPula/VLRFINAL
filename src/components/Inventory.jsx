@@ -161,8 +161,10 @@ const Inventory = (props) => {
     setGridApi(params.api);
     setColumnApi(params.columnApi);
     if(params.columnApi && JSON.parse(localStorage.getItem( 'SelectedOption' )).customerId !== '154239') {
-      params.columnApi.setColumnsVisible(['sku','fabricId'], false);
+      params.columnApi.setColumnsVisible(['fabricId'], false);
       
+    } else {
+      params.columnApi.setColumnsVisible(['sku','fabricId'], true);
     }
   };
 
@@ -180,8 +182,8 @@ const Inventory = (props) => {
 
   if(location.customer) {
     
-    localStorage.setItem( 'SelectedOption', JSON.stringify(userData.customers.filter((customer) => customer.customerId === location.customer)
-    .map((customer) => customer) ));
+    localStorage.setItem( 'SelectedOption', JSON.stringify((userData.customers.filter((customer) => customer.customerId === location.customer)
+    .map((customer) => customer) )[0]));
     dispatch(fetchInventoryData({ id: location.customer }));
     location.customer = undefined;
    
@@ -324,7 +326,7 @@ const Inventory = (props) => {
           <div className="card">
             <div className="row" style={{ marginTop: "2%", marginLeft: "0%" }}>
               <div className="col-md-4 text-left classtopcustomer" style={{fontSize: '22px'}}>
-              {JSON.parse(localStorage.getItem( 'SelectedOption' )).customerName}
+              {localStorage.getItem( 'SelectedOption' ) ? JSON.parse(localStorage.getItem( 'SelectedOption' )).customerName : ''}
               </div>
               <div className="col-md-3 text-right" style={{marginTop: '-72px', marginLeft: '40%' }}>
                 <Button
