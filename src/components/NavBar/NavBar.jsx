@@ -89,8 +89,6 @@ const NavBar = () => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [anchorCustomer, setAnchorCustomer] = React.useState(null);
-  const [customerName, setCustomerName] = React.useState(null);
-  const [customerId, setCustomerId] = React.useState(null);
 
 
   const isMenuOpen = Boolean(anchorEl);
@@ -108,20 +106,6 @@ const NavBar = () => {
     handleMenuClose();
     Logout()
   };
-
-  const handleCustomerMenuOpen = (event) => {
-    setAnchorCustomer(event.currentTarget);
-  };
-
-  const handleCustomerMenuClose = () => {
-    setAnchorCustomer(null);
-  };
-
-  const handleCustomerChange = (customerId, name) => {
-    setCustomerId(customerId);
-    setCustomerName(name);
-    console.log(customerId)
-  }
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -143,33 +127,7 @@ const NavBar = () => {
     </Menu>
   );
 
-  const renderCustomerMenu = (
-    <Menu
-      anchorEl={anchorCustomer}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      id="customer-search-account-menu"
-      keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={isCustomerMenuOpen}
-      onClose={handleCustomerMenuClose}
-    >
-
-      {userData.customers.map((customer, index) => 
-        <MenuItem key={index} value={index} onClick={handleCustomerMenuClose}>
-          <Link onClick={() => handleCustomerChange(customer.customerId, customer.customerName)}
-                  style={{ textDecoration: "none", fontStyle:"italic",fontFamily:"roboto" }}
-                  className="text-center"
-                  to={{pathname:"/inventory", customer: customer.customerId}}
-                >
-                  {customer.customerName}
-                </Link>
-          
-          </MenuItem>
-      )}
-      
-    </Menu>
-  );
-
+  
 
   return (
     <div className={classes.grow}>
@@ -189,21 +147,7 @@ const NavBar = () => {
             </div>
             <div>
             </div>
-            <div style={{marginLeft: "30%"}}>           
-            <IconButton
-                edge="end"
-                aria-label="Customers"
-                aria-controls="customer-search-account-menu"
-                aria-haspopup="true"
-                onClick={handleCustomerMenuOpen}
-                color="inherit"
-              >
-                <span style ={{fontSize: "large"}}>
-                  Select Customer
-                  </span>
-                
-              </IconButton>
-              </div>
+            
           <div className={classes.grow} />
           {authenticated ? (
             <div className={classes.sectionDesktop}>
@@ -251,7 +195,7 @@ const NavBar = () => {
         </Toolbar>
       </AppBar>
       {renderMenu}
-      {renderCustomerMenu}
+    
     </div>
   );
 };

@@ -7,16 +7,16 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import { useDispatch, useSelector } from "react-redux";
 import {useLocation} from "react-router-dom";
 import { fetchInventoryData } from "../redux/actions";
-//import CustomDropdown from "./CustomDropdown/CustomDropdown";
+import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import { makeStyles } from "@material-ui/core/styles";
 import "./Inventory.css";
 import moment from "moment";
-//import jwt, { JsonWebTokenError } from "jsonwebtoken"
+import Menu from "@material-ui/core/Menu";
 import printDoc from "./pdfExport/printDoc";
-//import {Logout} from "../components/Logout/Logout";
-//import { WrapText } from "@material-ui/icons";
+import MenuItem from "@material-ui/core/MenuItem";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -120,6 +120,9 @@ const columnDefs = [
 ];
 
 
+
+
+
 const Inventory = (props) => {
   console.log()
   //pdf attributes
@@ -200,13 +203,11 @@ const Inventory = (props) => {
         var customerSelected = userData.customers.filter((customer) => customer.customerName === 'Williams-Sonoma, Inc' );
         if(customerSelected[0]?.customerId) {
           dispatch(fetchInventoryData({ id: customerSelected[0]?.customerId }));
-          setCustomerName(customerSelected[0]?.customerName);
           localStorage.setItem( 'SelectedOption', JSON.stringify(customerSelected[0] ));
           
           
         } else {
           dispatch(fetchInventoryData({ id: userData.customers[0]?.customerId }));
-          setCustomerName(userData.customers[0]?.customerName);
           localStorage.setItem( 'SelectedOption', JSON.stringify(userData.customers[0] ));
         }
       }
@@ -247,7 +248,7 @@ const Inventory = (props) => {
       PDF_SELECTED_ROWS_ONLY
     };
 
-    printDoc(printParams, gridApi, columnApi, userData.customers[0]?.customerName);
+    printDoc(printParams, gridApi, columnApi, JSON.parse(localStorage.getItem( 'SelectedOption' )).customerName);
   };
 
   function createData(count, prefix) {
@@ -268,6 +269,46 @@ const Inventory = (props) => {
     }
     return result;
   }
+
+
+
+const [anchorCustomer, setAnchorCustomer] = React.useState(null);
+const isCustomerMenuOpen = Boolean(anchorCustomer);
+const handleInventoryCustomerMenuOpen = (event) => {
+  setAnchorCustomer(event.currentTarget);
+};
+
+const handleInventoryCustomerMenuClose = () => {
+  setAnchorCustomer(null);
+};
+
+
+const renderInventoryCustomerMenu = (
+  <Menu
+    anchorEl={anchorCustomer}
+    anchorOrigin={{ vertical: "top", horizontal: "right" }}
+    id="customer-search-account-menu"
+    keepMounted
+    transformOrigin={{ vertical: "top", horizontal: "right" }}
+    open={isCustomerMenuOpen}
+    onClose={handleInventoryCustomerMenuClose}
+  >
+
+    {userData.customers.map((customer, index) => 
+      <MenuItem key={index} value={index} onClick={handleInventoryCustomerMenuClose}>
+        <Link
+                style={{ textDecoration: "none", fontStyle:"italic",fontFamily:"roboto" }}
+                className="text-center"
+                to={{pathname:"/inventory", customer: customer.customerId}}
+              >
+                {customer.customerName}
+              </Link>
+        
+        </MenuItem>
+    )}
+    
+  </Menu>
+);
 
   return (
     <>
@@ -326,7 +367,27 @@ const Inventory = (props) => {
           <div className="card">
             <div className="row" style={{ marginTop: "2%", marginLeft: "0%" }}>
               <div className="col-md-4 text-left classtopcustomer" style={{fontSize: '22px'}}>
-              {localStorage.getItem( 'SelectedOption' ) ? JSON.parse(localStorage.getItem( 'SelectedOption' )).customerName : ''}
+
+                {userData.customers?.length > 1 ?
+              
+              <IconButton
+                edge="end"
+                aria-label="Customers"
+                aria-controls="customer-search-account-menu"
+                aria-haspopup="true"
+                onClick={handleInventoryCustomerMenuOpen}
+                color="inherit"
+              >
+                <span style ={{fontSize: "large"}}>
+                {localStorage.getItem( 'SelectedOption' ) ? JSON.parse(localStorage.getItem( 'SelectedOption' )).customerName : ''}
+                  </span>
+                
+              </IconButton> : userData.customers[0].customerName}
+
+
+
+              {renderInventoryCustomerMenu}
+              
               </div>
               <div className="col-md-3 text-right" style={{marginTop: '-72px', marginLeft: '40%' }}>
                 <Button
