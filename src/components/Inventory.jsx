@@ -7,7 +7,6 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import { useDispatch, useSelector } from "react-redux";
 import {useLocation} from "react-router-dom";
 import { fetchInventoryData } from "../redux/actions";
-import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import { makeStyles } from "@material-ui/core/styles";
@@ -17,6 +16,7 @@ import Menu from "@material-ui/core/Menu";
 import printDoc from "./pdfExport/printDoc";
 import MenuItem from "@material-ui/core/MenuItem";
 import { Link } from "react-router-dom";
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -152,7 +152,6 @@ const Inventory = (props) => {
   const { userData } = useSelector((state) => state.login);
   const [gridApi, setGridApi] = useState(null);
   const [columnApi, setColumnApi] = useState(null);
-  const [customerName, setCustomerName] = useState(null);
   const location = useLocation();
   console.log(location);
   //const { gridData, customerId, loading, totalCutomerFabrics } = useSelector(
@@ -369,20 +368,19 @@ const renderInventoryCustomerMenu = (
               <div className="col-md-4 text-left classtopcustomer" style={{fontSize: '22px'}}>
 
                 {userData.customers?.length > 1 ?
-              
-              <IconButton
-                edge="end"
-                aria-label="Customers"
-                aria-controls="customer-search-account-menu"
-                aria-haspopup="true"
-                onClick={handleInventoryCustomerMenuOpen}
-                color="inherit"
-              >
+              <Button
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              onClick={handleInventoryCustomerMenuOpen}
+              endIcon={<ArrowDropDownIcon />}
+            >
+             
                 <span style ={{fontSize: "large"}}>
                 {localStorage.getItem( 'SelectedOption' ) ? JSON.parse(localStorage.getItem( 'SelectedOption' )).customerName : ''}
                   </span>
                 
-              </IconButton> : userData.customers[0].customerName}
+              </Button> : userData.customers[0].customerName}
 
 
 
